@@ -1,5 +1,6 @@
 import requests
 import json
+import datetime as dt
 
 
 def get_iss_position():
@@ -18,12 +19,19 @@ def get_iss_position():
     return iss_position
 
 
-def get_sunrise_sunset(params):
+def get_sunrise_sunset(latitude, longitude, formatted=False):
     """
     https://sunrise-sunset.org/api
-    :param params:
+    :param latitude:
+    :param longitude:
+    :param formatted:
     :return: tuple(sunrise, sunset)
     """
+    params = {
+        "lat":  latitude,
+        "lng":  longitude,
+        "formatted":    1 if formatted else 0,
+    }
     response = requests.get("https://api.sunrise-sunset.org/json", params=params)
     # print(response.url)
     response.raise_for_status()
@@ -33,9 +41,17 @@ def get_sunrise_sunset(params):
     return sunrise, sunset
 
 
-TURIN = {
-    "lat": 45.068371,
-    "lng": 7.683070,
-}
+iss_position = get_iss_position()
 
-print(get_sunrise_sunset(TURIN))
+TURIN_LATITUDE = 45.068371
+TURIN_LONGITUDE = 7.683070
+sunrise, sunset = get_sunrise_sunset(TURIN_LATITUDE, TURIN_LONGITUDE)
+sunrise_hour = sunrise.split("T")[1].split(":")[0]
+sunset_hour = sunset.split("T")[1].split(":")[0]
+
+print("ISS current position              : ", iss_position)
+print("Sunrise/Sunset at current location: ", sunrise, sunset )
+print("Sunrise hour 24h                  : ", sunrise_hour)
+print("Sunset hour 24h                   : ", sunset_hour)
+print("current time                      : ", dt.datetime.now())
+print("current hour                      : ", dt.datetime.now().hour)
