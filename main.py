@@ -16,6 +16,7 @@ def get_iss_position():
     latitude = data["iss_position"]["latitude"]
     longitude = data["iss_position"]["longitude"]
 
+    print("iss position for google maps: ", latitude, longitude)
     iss_position_tuple = (float(latitude), float(longitude))
     iss_position_dict = {
         "latitude": float(latitude),
