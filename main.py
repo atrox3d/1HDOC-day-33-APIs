@@ -1,6 +1,7 @@
 import requests
 import json
 import datetime as dt
+import time
 
 
 def get_iss_position():
@@ -100,8 +101,11 @@ TURIN_LONGITUDE = 7.683070
 iss_above = is_iss_above(latitude=TURIN_LATITUDE, longitude=TURIN_LONGITUDE)
 is_dark = is_night(TURIN_LATITUDE, TURIN_LONGITUDE)
 
-if iss_above and is_dark:
-    # send mail
-    print("you can see the ISS now")
-else:
-    print("you cannot see the ISS now")
+while True:
+    if iss_above and is_dark:
+        # send mail
+        print("you can see the ISS now")
+    else:
+        print("you cannot see the ISS now")
+    time.sleep(60)
+
