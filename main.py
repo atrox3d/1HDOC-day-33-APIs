@@ -80,13 +80,13 @@ def is_night(latitude, longitude):
     sunset_hour = int(sunset.split("T")[1].split(":")[0])
 
     current_hour = dt.datetime.now().hour
-    print(type(current_hour))
+    # print(type(current_hour))
     print("sunrise hour    : ", sunrise_hour)
     print("sunset hour     : ", sunset_hour)
     print("current hour    : ", current_hour)
 
     print("sunrise_hour >= current_hour >= sunset_hour: ", end="")
-    if sunrise_hour >= current_hour >= sunset_hour:
+    if current_hour <= sunrise_hour or current_hour >= sunset_hour:
         print(True)
         print("is night: ", True)
         return True
@@ -98,7 +98,7 @@ def is_night(latitude, longitude):
 
 TURIN_LATITUDE = 45.068371
 TURIN_LONGITUDE = 7.683070
-
+WAIT_TIME = 60
 iss_above = is_iss_above(latitude=TURIN_LATITUDE, longitude=TURIN_LONGITUDE)
 is_dark = is_night(TURIN_LATITUDE, TURIN_LONGITUDE)
 
@@ -108,5 +108,6 @@ while True:
         print("you can see the ISS now")
     else:
         print("you cannot see the ISS now")
-    time.sleep(60)
+    print(f"waiting {WAIT_TIME} seconds...")
+    time.sleep(WAIT_TIME)
 
